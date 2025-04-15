@@ -8,15 +8,16 @@ class Route {
         static int unique_id;
         int m_route_id;                      
         std::vector<std::pair<double, double>> m_nodes; 
-        std::vector<double> m_distances; // distance from previous index points -> 0, 223, ...
+        std::vector<double> m_distances; // distance from next index points -> { 96, 223, ... 0 }
         // double m_distance;
         std::vector<double> m_schedule; 
     public:
         Route(const std::vector<std::pair<double, double>>& nodes, std::vector<double>& distances);            
         std::pair<double, double> getNextStop(size_t current_index) const;
         void updateSchedule(const std::vector<double>& new_timestamps);
-        double calculateDistance(size_t start_index, size_t end_index) const;
+        double getDistanceFromNextNode(const std::pair<double, double>& current) const;
         
+        std::pair<double, double>& getNextNode(std::pair<double, double>& current);
         const int getRouteId() const { return m_route_id; }
         double getDistance() const;
         const std::vector<std::pair<double, double>>& getNodes() const { return m_nodes; }

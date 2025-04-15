@@ -14,16 +14,21 @@ void Route::updateSchedule(const std::vector<double>& new_timestamps) {
     m_schedule = new_timestamps;
 }
 
-double Route::calculateDistance(size_t start_index, size_t end_index) const {
-    if (start_index > m_distances.size() || end_index > m_distances.size())
-        throw std::out_of_range("Invalid arguments");
-    if (start_index == m_distances.size() - 1) return 0;
-    int sum = 0;
-    for (int i = start_index + 1; i <= end_index; ++i) {
-        sum += m_distances[i];
+double Route::getDistanceFromNextNode(const std::pair<double, double>& current) const {
+    for (int i = 0; i < m_nodes.size(); ++i) {
+        if (current == m_nodes[i]) return m_distances[i];
     }
-    return sum;
+    throw std::invalid_argument("Invalid node!");
 }
+
+std::pair<double, double>& Route::getNextNode(std::pair<double, double>& current) {
+    if (current == m_nodes.back()) return current;
+    for (int i = 0; i < m_nodes.size() - 1; ++i) {
+        if (current == m_nodes[i])   return m_nodes[i + 1];
+    }
+    throw std::runtime_error("The location does not exist on this route");
+}
+
 
 double Route::getDistance() const { 
     int sum = 0;
