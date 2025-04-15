@@ -12,7 +12,7 @@ class Vehicle {
         double m_speed; // km/h
         int m_capacity;
         std::shared_ptr<Route> m_route;
-        int m_route_id;
+        // int m_route_id;
         std::pair<double, double> m_current_location;
         double m_arrival_time;
         T m_specific_data;
@@ -21,8 +21,8 @@ class Vehicle {
         void updateLocation(double time_step);
         void adjustSpeed(double new_speed);
         void recalculateRoute();
-        void logData() const; 
-    
+        void logData() const;
+
         int getId() const { return m_id; }
         double getSpeed() const { return m_speed; }
         const std::string& getRouteId() const { return route_id_; }
