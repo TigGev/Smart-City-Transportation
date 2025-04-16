@@ -3,24 +3,25 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include "Route.h"
 
 template <typename E>
 class Event {
     private:
-        E event_type_;                          
-        double duration_;                       
-        double severity_;                       
-        std::vector<std::string> affected_routes_; 
+        E m_event_type;
+        double m_duration;
+        double m_severity;
+        std::vector<Route> m_affected_routes;
     public:    
-        Event(E event_type, double duration, double severity, const std::vector<std::string>& affected_routes)
-            : event_type_(event_type), duration_(duration), severity_(severity), affected_routes_(affected_routes) {}
+        Event(E event_type, double duration, double severity, const std::vector<Route>& affected_routes)
+            : m_event_type(event_type), m_duration(duration), m_severity(severity), m_affected_routes(affected_routes) {}
         void notifyVehicles();
         void applyEffect();
         void subscribeVehicle(std::shared_ptr<void> vehicle);
 
-        E getEventType() const { return event_type_; }
-        double getDuration() const { return duration_; }
-        double getSeverity() const { return severity_; }
-        const std::vector<std::string>& getAffectedRoutes() const { return affected_routes_; }
+        E getEventType() const { return m_event_type; }
+        double getDuration() const { return m_duration; }
+        double getSeverity() const { return m_severity; }
+        const std::vector<std::string>& getAffectedRoutes() const { return m_affected_routes; }
 };
 #endif

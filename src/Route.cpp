@@ -5,10 +5,6 @@
 Route::Route(const std::vector<std::pair<double, double>>& nodes, std::vector<double>& distances)
     : m_route_id(unique_id++), m_nodes(nodes), m_distances(distances) {}
 
-std::pair<double, double> Route::getNextStop(size_t current_index) const {
-    return current_index + 1 < m_nodes.size() ? m_nodes[current_index + 1] : m_nodes.back();
-}
-
 void Route::updateSchedule(const std::vector<double>& new_timestamps) {
     if (new_timestamps.size() != m_schedule.size()) std::cout << "Invalid schedule\n";
     m_schedule = new_timestamps;
@@ -34,5 +30,13 @@ double Route::getDistance() const {
     int sum = 0;
     for (auto d : m_distances) sum += d;
     return sum;
+}
+
+double Route::getArrivalTime(std::pair<double, double>& current) {
+    if (current == m_nodes.back()) return 0.0;
+    for (int i = 0; i < m_nodes.size() - 1; ++i) {
+        if (current == m_nodes[i]) return m_schedule[i];
+    }
+    throw std::runtime_error("The location does not exist on this route");
 }
 

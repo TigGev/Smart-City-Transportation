@@ -12,12 +12,13 @@ class Vehicle {
         double m_speed; // km/h
         int m_capacity;
         std::shared_ptr<Route> m_route;
-        // int m_route_id;
         std::pair<double, double> m_current_location;
         double m_arrival_time;
-        T m_specific_data;
+        T m_consumption; // per 100km
+        T m_specific_fuel;
+        void takeAwayFuel(double distance);
     public:
-        Vehicle(int id, double speed, int capacity, const std::string& route_id, T specific_data);
+        Vehicle(int id, double speed, int capacity, const std::string& route_id, T consumption, T specific_fuel);
         void updateLocation(double time_step);
         void adjustSpeed(double new_speed);
         void recalculateRoute();
